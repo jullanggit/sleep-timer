@@ -55,6 +55,10 @@ fn main() {
 
     println!("Waiting for: {} min", duration.as_secs() / 60);
 
+    if env::args().nth(1) == Some(String::from("--dry-run")) {
+        return;
+    }
+
     thread::sleep(duration);
 
     Command::new("poweroff").spawn().unwrap().wait().unwrap();

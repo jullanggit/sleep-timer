@@ -2,6 +2,8 @@ A little quick-and-dirty sleep timer app, that powers off your system every 15 m
 
 Most likely has to be run as root in order to power off the system.
 
+use --dry-run to just print the time until poweroff
+
 Works with a config file with the following entries:
 
 ```
