@@ -24,40 +24,38 @@ fn main() {
 
     assert!(times.len() == 7);
 
-    loop {
-        let duration = SystemTime::now()
-            .duration_since(UNIX_EPOCH)
-            .expect("Time went backwards");
+    let duration = SystemTime::now()
+        .duration_since(UNIX_EPOCH)
+        .expect("Time went backwards");
 
-        let days = duration.as_secs() / SECONDS_PER_DAY;
-        let day_of_week = (days + 4) % 7; // 0 = Monday
+    let days = duration.as_secs() / SECONDS_PER_DAY;
+    let day_of_week = (days + 4) % 7; // 0 = Monday
 
-        let seconds_into_day = duration.as_secs() % SECONDS_PER_DAY;
+    let seconds_into_day = duration.as_secs() % SECONDS_PER_DAY;
 
-        let hour = ((seconds_into_day / SECONDS_PER_HOUR) as i64 + hour_offset) as u64;
-        let minute = (seconds_into_day % SECONDS_PER_HOUR) / 60;
+    let hour = ((seconds_into_day / SECONDS_PER_HOUR) as i64 + hour_offset) as u64;
+    let minute = (seconds_into_day % SECONDS_PER_HOUR) / 60;
 
-        let (target_hour, target_minute) = times[day_of_week as usize];
+    let (target_hour, target_minute) = times[day_of_week as usize];
 
-        let duration = {
-            let hours = Duration::from_hours(if target_hour < hour {
-                24 - (hour - target_hour)
-            } else {
-                target_hour - hour
-            });
-            if target_minute < minute {
-                hours - Duration::from_mins(minute - target_minute)
-            } else {
-                hours + Duration::from_mins(target_minute - minute)
-            }
+    let duration = {
+        let hours = Duration::from_hours(if target_hour < hour {
+            24 - (hour - target_hour)
+        } else {
+            target_hour - hour
+        });
+        if target_minute < minute {
+            hours - Duration::from_mins(minute - target_minute)
+        } else {
+            hours + Duration::from_mins(target_minute - minute)
         }
-        .checked_sub(Duration::from_mins(timer_offset.0 * 60 + timer_offset.1))
-        .unwrap_or(Duration::from_mins(15));
-
-        println!("Waiting for: {} min", duration.as_secs() / 60);
-
-        thread::sleep(duration);
-
-        Command::new("poweroff").spawn().unwrap().wait().unwrap();
     }
+    .checked_sub(Duration::from_mins(timer_offset.0 * 60 + timer_offset.1))
+    .unwrap_or(Duration::from_mins(15));
+
+    println!("Waiting for: {} min", duration.as_secs() / 60);
+
+    thread::sleep(duration);
+
+    Command::new("poweroff").spawn().unwrap().wait().unwrap();
 }
