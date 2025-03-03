@@ -6,7 +6,7 @@ use --dry-run to just print the time until poweroff
 
 see sleep_timer.service for an example systemd service for starting sleep-timer
 
-Works with a config file with the following entries:
+Works with a config file (~/.config/sleep-timer) with the following entries:
 
 ```
 timezone_offset_from_utc
