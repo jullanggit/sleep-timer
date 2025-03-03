@@ -4,6 +4,8 @@ Most likely has to be run as root in order to power off the system.
 
 use --dry-run to just print the time until poweroff
 
+see sleep_timer.service for an example systemd service for starting sleep-timer
+
 Works with a config file with the following entries:
 
 ```

@@ -1,0 +1,10 @@
+[Unit]
+Description=Start sleep-timer as root
+
+[Service]
+Environment="HOME=/home/{your-user}"
+ExecStart={path to sleep timer binary (probably /home/{your-user}/.cargo/bin/sleep-timer)}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
