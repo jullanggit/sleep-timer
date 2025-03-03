@@ -22,6 +22,8 @@ wakeup_time_sunday
 timer_offset
 ```
 
+Sleep-timer will shut down your system at wakeup_time - timer_offset
+
 for example:
 
 ```
