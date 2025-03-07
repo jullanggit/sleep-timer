@@ -42,10 +42,10 @@ fn main() {
 
     // Calculate duration until target hour
     let duration = {
-        let hours = Duration::from_hours(if target_hour < hour {
-            24 - (hour - target_hour)
-        } else {
+        let hours = Duration::from_hours(if target_hour > hour {
             target_hour - hour
+        } else {
+            24 - (hour - target_hour)
         });
         if target_minute < minute {
             hours - Duration::from_mins(minute - target_minute)
@@ -66,5 +66,6 @@ fn main() {
 
     thread::sleep(duration);
 
+    println!("Powering off the system now");
     Command::new("poweroff").spawn().unwrap().wait().unwrap();
 }
